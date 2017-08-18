@@ -25,12 +25,18 @@ class ProcessorService implements CacheWarmerInterface
      */
     private $cacheService;
 
+    /**
+     * @var array
+     */
+    private $areas;
+
     private $data = [];
 
-    public function __construct(EventDispatcherInterface $eventDispatcher, CacheService $cacheService)
+    public function __construct(EventDispatcherInterface $eventDispatcher, CacheService $cacheService, AreaRegistrator $areaRegistrator)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->cacheService = $cacheService;
+        $this->areas = $areaRegistrator->getAreas();
     }
 
     public function warmUp($cacheDir)
@@ -45,25 +51,14 @@ class ProcessorService implements CacheWarmerInterface
 
     public function execute()
     {
-        $this->data = [];
+        $event = new DataProcessorEvent();
 
-        $this->eventDispatcher->dispatch(
-            "agit.portal.data",
-            new DataProcessorEvent($this)
-        );
+        $this->eventDispatcher->dispatch("agit.portal.data", $event);
 
-        $this->cacheService->save($this->data);
-    }
-
-    /**
-     * Allows registered services to store their processed data.
-     */
-    public function store($area, $key, $data)
-    {
-        if (! isset($this->data[$area])) {
-            $this->data[$area] = [];
+        foreach ($event->getStoredData() as $area => $data) {
+            if (isset($this->areas[$area])) {
+                $this->cacheService->save($area, $data);
+            }
         }
-
-        $this->data[$area][$key] = $data;
     }
 }

@@ -9,10 +9,6 @@
 
 namespace Agit\PortalBundle\Service;
 
-use Agit\PortalBundle\Event\DataProcessorEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
-
 class AreaRegistrator
 {
     private $areas = [];

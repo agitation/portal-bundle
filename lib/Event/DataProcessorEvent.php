@@ -9,23 +9,23 @@
 
 namespace Agit\PortalBundle\Event;
 
-use Agit\PortalBundle\Service\ProcessorService;
 use Symfony\Component\EventDispatcher\Event;
 
 class DataProcessorEvent extends Event
 {
-    /**
-     * @var ProcessorService
-     */
-    private $processor;
+    private $data = [];
 
-    public function __construct(ProcessorService $processor)
+    public function store($area, $key, $value)
     {
-        $this->processor = $processor;
+        if (! isset($this->data[$area])) {
+            $this->data[$area] = [];
+        }
+
+        $this->data[$area][$key] = $value;
     }
 
-    public function store($area, $key, $data)
+    public function getStoredData()
     {
-        return $this->processor->store($area, $key, $data);
+        return $this->data;
     }
 }

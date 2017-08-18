@@ -22,11 +22,9 @@ class CacheService
         $this->cache = new FilesystemCache($cacheDir . "/" . self::CACHE_DIR);
     }
 
-    public function save($data)
+    public function save($area, $values)
     {
-        foreach ($data as $area => $values) {
-            $this->cache->save($area, $values);
-        }
+        $this->cache->save($area, $values);
     }
 
     public function load($area)
