@@ -1,0 +1,4 @@
+stats_dashboard :
+    path : /{area}
+    defaults : { _controller: AgitPortalBundle:Data:load }
+    methods: [GET, OPTIONS]

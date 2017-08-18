@@ -1,0 +1,14 @@
+services:
+    agit.portal.processor:
+        class: Agit\PortalBundle\Service\ProcessorService
+        arguments: [ "@event_dispatcher", "@agit.portal.cache" ]
+        tags :
+            - { name: agit.cronjob, schedule: "*/5 * * * *", method: execute }
+            - { name: kernel.cache_warmer }
+
+    agit.portal.cache:
+        class: Agit\PortalBundle\Service\CacheService
+        arguments: [ "%kernel.cache_dir%" ]
+
+    agit.portal.areas:
+        class: Agit\PortalBundle\Service\AreaRegistrator

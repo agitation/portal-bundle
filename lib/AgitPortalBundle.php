@@ -2,9 +2,9 @@
 
 /*
  * @package    agitation/portal-bundle
- * @link       http://github.com/agitation/portal-bundle
+ * @link       https://github.com/agitation/portal-bundle
  * @author     Alexander Günsche
- * @license    http://opensource.org/licenses/MIT
+ * @license    https://opensource.org/licenses/MIT
  */
 
 namespace Agit\PortalBundle;
