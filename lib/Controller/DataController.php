@@ -30,10 +30,14 @@ class DataController extends Controller
         }
 
         $data = $this->container->get("agit.portal.cache")->loadAsJson($area);
+        $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
+
         $response = new Response($data, 200);
+        $response->headers->set("Content-Encoding", "deflate");
         $response->headers->set("Content-Type", "application/json; charset=UTF-8");
         $response->headers->set("Expires", "Mon, 7 Apr 1980 05:00:00 GMT");
         $response->headers->set("Cache-Control", "no-cache, must-revalidate, max-age=0", true);
+        $response->headers->set("Pragma", "no-store", true);
         $response->headers->set("Pragma", "no-store", true);
 
         return $response;
