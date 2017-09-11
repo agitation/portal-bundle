@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /*
  * @package    agitation/portal-bundle
  * @link       https://github.com/agitation/portal-bundle
@@ -13,13 +13,13 @@ use Doctrine\Common\Cache\FilesystemCache;
 
 class CacheService
 {
-    const CACHE_DIR = "agit/portal";
+    const CACHE_DIR = 'agit/portal';
 
     private $cache;
 
     public function __construct($cacheDir)
     {
-        $this->cache = new FilesystemCache($cacheDir . "/" . self::CACHE_DIR);
+        $this->cache = new FilesystemCache($cacheDir . '/' . self::CACHE_DIR);
     }
 
     public function save($area, $values)

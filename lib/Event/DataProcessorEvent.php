@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /*
  * @package    agitation/portal-bundle
  * @link       https://github.com/agitation/portal-bundle
@@ -17,7 +17,8 @@ class DataProcessorEvent extends Event
 
     public function store($area, $key, $value)
     {
-        if (! isset($this->data[$area])) {
+        if (! isset($this->data[$area]))
+        {
             $this->data[$area] = [];
         }
 

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /*
  * @package    agitation/portal-bundle
  * @link       https://github.com/agitation/portal-bundle
@@ -53,10 +53,12 @@ class ProcessorService implements CacheWarmerInterface
     {
         $event = new DataProcessorEvent();
 
-        $this->eventDispatcher->dispatch("agit.portal.data", $event);
+        $this->eventDispatcher->dispatch('agit.portal.data', $event);
 
-        foreach ($event->getStoredData() as $area => $data) {
-            if (isset($this->areas[$area])) {
+        foreach ($event->getStoredData() as $area => $data)
+        {
+            if (isset($this->areas[$area]))
+            {
                 $this->cacheService->save($area, $data);
             }
         }

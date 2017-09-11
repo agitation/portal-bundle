@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /*
  * @package    agitation/portal-bundle
  * @link       https://github.com/agitation/portal-bundle
@@ -18,12 +18,12 @@ class ProcessDataCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName("agit:portal:generate")
-            ->setDescription("generate portal data.");
+            ->setName('agit:portal:generate')
+            ->setDescription('generate portal data.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        return $this->getContainer()->get("agit.portal.processor")->execute();
+        return $this->getContainer()->get('agit.portal.processor')->execute();
     }
 }

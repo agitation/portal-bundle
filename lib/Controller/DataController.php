@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /*
  * @package    agitation/portal-bundle
  * @link       https://github.com/agitation/portal-bundle
@@ -18,27 +18,29 @@ class DataController extends Controller
 {
     public function loadAction($area)
     {
-        $areas = $this->container->get("agit.portal.areas")->getAreas();
+        $areas = $this->container->get('agit.portal.areas')->getAreas();
 
-        if (! isset($areas[$area])) {
-            throw new NotFoundHttpException("This area does not exist.");
+        if (! isset($areas[$area]))
+        {
+            throw new NotFoundHttpException('This area does not exist.');
         }
 
         // currently $areas[$area] is the required capability
-        if ($areas[$area] && ! $this->container->get("agit.user")->currentUserCan($areas[$area])) {
-            throw new AccessDeniedHttpException("You are not allowed to access this page.");
+        if ($areas[$area] && ! $this->container->get('agit.user')->currentUserCan($areas[$area]))
+        {
+            throw new AccessDeniedHttpException('You are not allowed to access this page.');
         }
 
-        $data = $this->container->get("agit.portal.cache")->loadAsJson($area);
+        $data = $this->container->get('agit.portal.cache')->loadAsJson($area);
         $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
 
         $response = new Response($data, 200);
-        $response->headers->set("Content-Encoding", "deflate");
-        $response->headers->set("Content-Type", "application/json; charset=UTF-8");
-        $response->headers->set("Expires", "Mon, 7 Apr 1980 05:00:00 GMT");
-        $response->headers->set("Cache-Control", "no-cache, must-revalidate, max-age=0", true);
-        $response->headers->set("Pragma", "no-store", true);
-        $response->headers->set("Pragma", "no-store", true);
+        $response->headers->set('Content-Encoding', 'deflate');
+        $response->headers->set('Content-Type', 'application/json; charset=UTF-8');
+        $response->headers->set('Expires', 'Mon, 7 Apr 1980 05:00:00 GMT');
+        $response->headers->set('Cache-Control', 'no-cache, must-revalidate, max-age=0', true);
+        $response->headers->set('Pragma', 'no-store', true);
+        $response->headers->set('Pragma', 'no-store', true);
 
         return $response;
     }
